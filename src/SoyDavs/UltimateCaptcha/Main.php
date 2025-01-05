@@ -8,26 +8,23 @@ use SoyDavs\UltimateCaptcha\commands\CaptchaCommand;
 
 class Main extends PluginBase {
 
-    private $config;
     private $captchaManager;
 
     public function onEnable(): void {
         $this->saveDefaultConfig();
-        $this->config = $this->getConfig();
-
         $this->captchaManager = new CaptchaManager($this);
 
+        // Register listeners
         $this->getServer()->getPluginManager()->registerEvents(
             new EventListener($this, $this->captchaManager),
             $this
         );
 
+        // Register commands
         $this->getServer()->getCommandMap()->register(
-            "ultimatecaptcha", 
-            new CaptchaCommand($this) 
+            "ultimatecaptcha",
+            new CaptchaCommand($this)
         );
-
-        $this->getLogger()->info("§aUltimateCaptcha by SoyDavs Enabled");
     }
 
     public function getCaptchaManager(): CaptchaManager {

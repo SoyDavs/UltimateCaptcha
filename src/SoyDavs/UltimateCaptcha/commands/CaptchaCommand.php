@@ -5,9 +5,12 @@ namespace SoyDavs\UltimateCaptcha\commands;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
+use pocketmine\plugin\PluginOwned;
 use SoyDavs\UltimateCaptcha\Main;
+use pocketmine\plugin\PluginOwnedTrait;
 
-class CaptchaCommand extends Command {
+class CaptchaCommand extends Command implements PluginOwned {
+    use PluginOwnedTrait;
 
     private Main $plugin;
 
@@ -35,5 +38,9 @@ class CaptchaCommand extends Command {
         $this->plugin->getCaptchaManager()->showCaptcha($sender);
         $sender->sendMessage("§aCaptcha has been forced. Please complete it!");
         return true;
+    }
+
+    public function getOwningPlugin(): Main {
+        return $this->plugin;
     }
 }
